@@ -1,23 +1,16 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js';
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
+    getDatabase,
+    ref,
+    push,
+    update,
+    remove,
     query,
-    orderBy,
-    onSnapshot,
+    orderByChild,
+    onValue,
     serverTimestamp
-} from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
+} from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js';
 
-// =============================================
-// Firebase 설정
-// Firebase Console(https://console.firebase.google.com) > 프로젝트 설정 > 앱 추가(웹)
-// 에서 아래 값을 본인 프로젝트 설정으로 교체하세요.
-// Firestore Database > 규칙(Rules) 에서 읽기/쓰기 허용 설정도 필요합니다.
-// =============================================
 const firebaseConfig = {
     apiKey: "AIzaSyA2EZAYD9yu9BL_Mp9ubbK7Z8Nq9XH0wC8",
     authDomain: "jjangkku-todo-backend.firebaseapp.com",
@@ -30,8 +23,8 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const todosRef = collection(db, 'todos');
+const db = getDatabase(app);
+const todosRef = ref(db, 'todos');
 
 // 상태
 let todos = [];
@@ -46,10 +39,13 @@ const emptyState = document.getElementById('empty-state');
 const statusBanner = document.getElementById('status-banner');
 const filterBtns = document.querySelectorAll('.filter-btn');
 
-// Firestore 실시간 구독
-const q = query(todosRef, orderBy('createdAt', 'asc'));
-onSnapshot(q, snapshot => {
-    todos = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+// Realtime Database 실시간 구독
+const todosQuery = query(todosRef, orderByChild('createdAt'));
+onValue(todosQuery, snapshot => {
+    todos = [];
+    snapshot.forEach(child => {
+        todos.push({ id: child.key, ...child.val() });
+    });
     renderTodos();
 }, err => {
     console.error(err);
@@ -64,7 +60,7 @@ form.addEventListener('submit', async e => {
     const text = input.value.trim();
     if (!text) return;
     try {
-        await addDoc(todosRef, { text, completed: false, createdAt: serverTimestamp() });
+        await push(todosRef, { text, completed: false, createdAt: serverTimestamp() });
         input.value = '';
     } catch (err) {
         console.error('추가 실패:', err);
@@ -73,19 +69,19 @@ form.addEventListener('submit', async e => {
 
 // 완료 토글
 async function toggleTodo(id, currentCompleted) {
-    await updateDoc(doc(db, 'todos', id), { completed: !currentCompleted });
+    await update(ref(db, `todos/${id}`), { completed: !currentCompleted });
 }
 
 // 삭제
 async function deleteTodo(id) {
-    await deleteDoc(doc(db, 'todos', id));
+    await remove(ref(db, `todos/${id}`));
 }
 
 // 텍스트 수정 저장
 async function saveTodo(id, newText) {
     const text = newText.trim();
     if (!text) return;
-    await updateDoc(doc(db, 'todos', id), { text });
+    await update(ref(db, `todos/${id}`), { text });
 }
 
 // ---- 렌더링 ----
