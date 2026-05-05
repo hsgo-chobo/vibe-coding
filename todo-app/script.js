@@ -19,12 +19,13 @@ import {
 // Firestore Database > 규칙(Rules) 에서 읽기/쓰기 허용 설정도 필요합니다.
 // =============================================
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyA2EZAYD9yu9BL_Mp9ubbK7Z8Nq9XH0wC8",
+    authDomain: "jjangkku-todo-backend.firebaseapp.com",
+    databaseURL: "https://jjangkku-todo-backend-default-rtdb.firebaseio.com",
+    projectId: "jjangkku-todo-backend",
+    storageBucket: "jjangkku-todo-backend.firebasestorage.app",
+    messagingSenderId: "842647695664",
+    appId: "1:842647695664:web:ea1a8f5fe95b00f99298f5"
 };
 
 // Firebase 초기화
