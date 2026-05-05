@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MovieFlix - 현재 상영 중</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- 헤더 -->
+<header>
+  <a class="logo" href="#">MOVIEFLIX</a>
+  <div class="nav-right">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="제목으로 검색…" />
+    </div>
+  </div>
+</header>
+
+<!-- 히어로 배너 -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div id="hero-gradient"></div>
+  <div class="hero-content">
+    <span class="hero-badge">현재 상영 중</span>
+    <h1 class="hero-title" id="hero-title">로딩 중…</h1>
+    <div class="hero-meta" id="hero-meta"></div>
+    <p class="hero-overview" id="hero-overview"></p>
+    <div class="hero-buttons">
+      <button class="btn btn-play" onclick="heroPlay()">▶ 재생</button>
+      <button class="btn btn-info" onclick="heroInfo()">ℹ 상세 정보</button>
+    </div>
+  </div>
+</section>
+
+<!-- 영화 슬라이더 -->
+<main>
+  <section class="slider-section" style="margin-top: 32px;">
+    <h2 class="section-title">🎬 지금 상영 중인 영화</h2>
+    <div class="slider-wrapper">
+      <button class="scroll-btn left" onclick="scrollRow('now-playing', -1)">&#10094;</button>
+      <div class="movie-row" id="now-playing"></div>
+      <button class="scroll-btn right" onclick="scrollRow('now-playing', 1)">&#10095;</button>
+    </div>
+  </section>
+
+  <section class="slider-section">
+    <h2 class="section-title">⭐ 평점 높은 작품</h2>
+    <div class="slider-wrapper">
+      <button class="scroll-btn left" onclick="scrollRow('top-rated', -1)">&#10094;</button>
+      <div class="movie-row" id="top-rated"></div>
+      <button class="scroll-btn right" onclick="scrollRow('top-rated', 1)">&#10095;</button>
+    </div>
+  </section>
+
+  <section class="slider-section">
+    <h2 class="section-title">🔥 인기 급상승</h2>
+    <div class="slider-wrapper">
+      <button class="scroll-btn left" onclick="scrollRow('popular', -1)">&#10094;</button>
+      <div class="movie-row" id="popular"></div>
+      <button class="scroll-btn right" onclick="scrollRow('popular', 1)">&#10095;</button>
+    </div>
+  </section>
+</main>
+
+<!-- 모달 -->
+<div id="modal-backdrop" onclick="closeModal(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-banner-overlay">
+      <img id="modal-banner" src="" alt="" />
+      <div class="modal-banner-title" id="modal-modal-title"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta" id="modal-meta"></div>
+      <p class="modal-overview" id="modal-overview"></p>
+    </div>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-links">
+    <a href="#">오디오 설명</a>
+    <a href="#">고객 센터</a>
+    <a href="#">개인 정보 처리 방침</a>
+    <a href="#">이용 약관</a>
+    <a href="#">쿠키 기본 설정</a>
+    <a href="#">회사 정보</a>
+  </div>
+  <p>영화 데이터 제공: <strong>TMDB (The Movie Database)</strong></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

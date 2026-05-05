@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할일 앱</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1 class="app-title">할일 목록</h1>
+            <p class="todo-count" id="todo-count"></p>
+        </header>
+
+        <div id="status-banner" class="status-banner" hidden></div>
+
+        <form class="add-form" id="add-form">
+            <input
+                type="text"
+                id="todo-input"
+                class="todo-input"
+                placeholder="새 할일을 입력하세요..."
+                autocomplete="off"
+                maxlength="200"
+            />
+            <button type="submit" class="btn btn-primary">추가</button>
+        </form>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">전체</button>
+            <button class="filter-btn" data-filter="active">진행중</button>
+            <button class="filter-btn" data-filter="completed">완료</button>
+        </div>
+
+        <ul id="todo-list" class="todo-list"></ul>
+
+        <p class="empty-state" id="empty-state" hidden>
+            할일이 없습니다. 새 할일을 추가해보세요!
+        </p>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
